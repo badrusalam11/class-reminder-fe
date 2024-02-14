@@ -82,6 +82,7 @@ function SignIn() {
 
 
   const submitForm = async (e) => {
+    console.log("submit form")
     // console.log(e)
     const res = await fetch(`${process.env.REACT_APP_API_URL}api/v1/login`,
     {
@@ -227,7 +228,7 @@ function SignIn() {
               </NavLink>
             </Flex> */}
             <Button
-            type="submit"
+              type="submit"
               fontSize='sm'
               variant='brand'
               fontWeight='500'

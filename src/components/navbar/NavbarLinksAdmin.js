@@ -195,8 +195,10 @@ export default function HeaderLinks(props) {
 							_focus={{ bg: 'none' }}
 							color="red.400"
 							borderRadius="8px"
-							px="14px">
-							<Text fontSize="sm" onClick={Logout}>Log out</Text>
+							px="14px"
+							onClick={Logout}
+							>
+							<Text fontSize="sm">Log out</Text>
 						</MenuItem>
 					</Flex>
 				</MenuList>

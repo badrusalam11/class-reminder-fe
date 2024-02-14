@@ -21,6 +21,7 @@ import DataTables from "views/admin/dataTables";
 import DataManagement from "views/admin/dataManagement";
 import BlastEvent from "views/admin/blastEvent";
 import StudentData from "views/admin/studentData";
+import CourseData from "views/admin/courseData";
 import RTL from "views/admin/rtl";
 import NotFound from "views/general/notfound";
 
@@ -72,7 +73,7 @@ const routes = [
             color='inherit'
           />
         ),
-        component: DataManagement,
+        component: CourseData,
       },
     ]
   },
