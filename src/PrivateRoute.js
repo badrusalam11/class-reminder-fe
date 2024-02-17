@@ -9,18 +9,28 @@ const isUserLoggedIn = () => {
   // Return true if the user is logged in, otherwise false
   // Replace the following line with your actual implementation
   let status = localStorage.getItem('token') !== null
-  console.log("status", status)
+  console.log("status login:", status)
   return status;
 };
 
-const PrivateRoute = ({ component: Component, redirectPath, ...rest }) => (
+const PrivateRoute = ({ path, component: Component, redirectPath, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      isUserLoggedIn() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={redirectPath} />
+      path!="/auth/sign-in"?(
+        isUserLoggedIn() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={redirectPath} />
+        )
+
+      ):(
+        // kalo dah login
+        isUserLoggedIn() ? (
+          <Redirect to={"/admin/default"} />
+        ) : (
+          <Redirect to={redirectPath} />
+        )
       )
     }
   />

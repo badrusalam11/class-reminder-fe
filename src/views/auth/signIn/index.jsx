@@ -38,6 +38,9 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 // Custom components
 import { HSeparator } from "components/separator/Separator";
@@ -47,6 +50,7 @@ import illustration from "assets/img/auth/perbanas_gedung.jpeg";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { ThemeEditorRootPanel } from "@hypertheme-editor/chakra-ui";
 
 function SignIn() {
   // Chakra color mode
@@ -79,6 +83,36 @@ function SignIn() {
 //   }
 
 // }
+
+React.useEffect(() => {
+  checkSession();
+}, []);
+
+const checkSession = () =>{
+   // Access the URL parameters
+   const searchParams = new URLSearchParams(location.search);
+   const sessionExpired = searchParams.get("sessionExpired");
+
+   if (sessionExpired === "true") {
+     // Handle session expiration as needed
+     console.log("Session expired. Please log in again.");
+     setError("Session Expired")
+   }
+
+    // if(localStorage.length != 0){
+    // // return window.location.replace("#");
+    // if(localStorage.getItem("token")!== null){
+    //   console.log("punya token")
+    //   window.location.replace(`${process.env.REACT_BASE_URL}`)
+    // }}
+}
+
+const isHideError = (error)=> {
+  if (error!=""){
+    return false
+  }
+  return true
+}
 
 
   const submitForm = async (e) => {
@@ -136,7 +170,11 @@ function SignIn() {
             Enter your username and password to sign in!
           </Text>
         </Box>
-        <h3 style={{color:'red', fontStyle:'italic'}}>{error}</h3>
+        {/* <h3 style={{color:'red', fontStyle:'italic'}}>{error}</h3> */}
+        <Alert status='error' hidden={isHideError(error)}>
+          <AlertIcon />
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
         <Flex
           zIndex='2'
           direction='column'

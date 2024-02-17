@@ -19,16 +19,17 @@ ReactDOM.render(
         <HashRouter>
           <Switch>
             <Route path="/auth" component={AuthLayout} />
+            {/* <PrivateRoute path="/auth" component={AuthLayout} redirectPath="/admin"/> */}
             {/* Use PrivateRoute for protected routes */}
             <PrivateRoute
               path="/admin"
               component={AdminLayout}
-              redirectPath="/auth/login"
+              redirectPath="/auth/sign-in"
             />
             <PrivateRoute
               path="/rtl"
               component={RtlLayout}
-              redirectPath="/auth/login"
+              redirectPath="/auth/sign-in"
             />
             <PrivateRoute
               path="/notfound"

@@ -37,7 +37,7 @@ export const callApi = async (endpoint, method = 'GET', data = null) => {
     if (finalResponse.code=="05") {
         console.log("session expired")
         localStorage.clear()
-        window.location.replace(`${process.env.REACT_BASE_URL}`)
+        window.location.replace(`${process.env.REACT_BASE_URL}`+"?sessionExpired=true")
     }
     return finalResponse;
   } catch (error) {

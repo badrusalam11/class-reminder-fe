@@ -24,6 +24,8 @@ import StudentData from "views/admin/studentData";
 import CourseData from "views/admin/courseData";
 import RTL from "views/admin/rtl";
 import NotFound from "views/general/notfound";
+import PaymentReminder from "views/admin/paymentReminder";
+import CourseReminder from "views/admin/courseReminder";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -98,18 +100,18 @@ const routes = [
       },
       
       {
-        name: "Payment Reminder",
-        layout: "/admin",
-        path: "/payment",
-        icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
-        component: Profile,
-      },
-      {
-        name: "Course Reminder",
+        name: "Course Reminder Log",
         layout: "/admin",
         path: "/course",
         icon: <Icon as={MdMenuBook} width='20px' height='20px' color='inherit' />,
-        component: Profile,
+        component: CourseReminder,
+      },
+      {
+        name: "Payment Reminder Log",
+        layout: "/admin",
+        path: "/payment",
+        icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+        component: PaymentReminder,
       },
 
     ]
