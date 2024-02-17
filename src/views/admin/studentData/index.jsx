@@ -65,6 +65,10 @@ export default function Settings() {
   const [rclass, setClass] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [major, setMajor] = React.useState('');
+  const [tuitionFee, setTuitionFee] = React.useState(0);
+  const [vaAccount, setVaAccount] = React.useState('');
+
+
   const[isLoading, setIsLoading] = React.useState(false)
   const[data, setData] = React.useState([])
   const [listClass, setListClass] = React.useState([])
@@ -151,6 +155,8 @@ export default function Settings() {
       class: selectedClasses,
       phone: phone,
       major: major,
+      tuition_fee: parseInt(tuitionFee),
+      va_account: vaAccount,
     };
     console.log('requestData', requestData)
     const result = await callApi(endpoint, 'POST', requestData);
@@ -169,6 +175,8 @@ export default function Settings() {
     setClass('');
     setPhone('');
     setMajor('');
+    setTuitionFee('');
+    setVaAccount('');
     setSelectedClasses([])
   }
 
@@ -210,6 +218,8 @@ export default function Settings() {
     setNim(result.data.nim)
     setPhone(result.data.no_hp)
     setMajor(result.data.major)
+    setTuitionFee(result.data.tuition_fee)
+    setVaAccount(result.data.va_account)
     setSelectedClasses(result.data.class_arr)
     }
 
@@ -285,6 +295,27 @@ export default function Settings() {
               value={major}
               onChange={(e) => setMajor(e.target.value)}
               placeholder='Major'
+              disabled={isFormDisabled}
+              />
+            </FormControl>
+            <FormControl mb="5px">
+              <FormLabel>Tuition Fee</FormLabel>
+              {/* <Input ref={initialRef} placeholder='First name' /> */}
+              <Input
+              type="number"
+              value={tuitionFee}
+              onChange={(e) => setTuitionFee(e.target.value)}
+              placeholder='Tuition Fee'
+              disabled={isFormDisabled}
+              />
+            </FormControl>
+            <FormControl mb="5px">
+              <FormLabel>VA Account</FormLabel>
+              {/* <Input ref={initialRef} placeholder='First name' /> */}
+              <Input
+              value={vaAccount}
+              onChange={(e) => setVaAccount(e.target.value)}
+              placeholder='VA Account'
               disabled={isFormDisabled}
               />
             </FormControl>
