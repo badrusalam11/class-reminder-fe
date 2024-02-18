@@ -116,6 +116,8 @@ const isHideError = (error)=> {
 
 
   const submitForm = async (e) => {
+    e.preventDefault();
+
     console.log("submit form")
     // console.log(e)
     const res = await fetch(`${process.env.REACT_APP_API_URL}api/v1/login`,
