@@ -107,7 +107,7 @@ const routes = [
         component: CourseReminder,
       },
       {
-        name: "Payment Reminder Log",
+        name: "Payment Reminder",
         layout: "/admin",
         path: "/payment",
         icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,

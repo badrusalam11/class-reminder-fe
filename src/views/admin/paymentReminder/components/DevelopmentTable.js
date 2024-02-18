@@ -16,7 +16,7 @@ import {
   Button,
 
 } from "@chakra-ui/react";
-import { Search2Icon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import { Search2Icon, DeleteIcon, EditIcon , EmailIcon} from '@chakra-ui/icons'
 
 import { whiten } from "@chakra-ui/theme-tools";
 // Custom components
@@ -32,7 +32,7 @@ import {
 } from "react-table";
 
 export default function DevelopmentTable(props) {
-  const { columnsData, tableData, openModal, deleteStudent} = props;
+  const { columnsData, tableData, openModal, triggerReminder, hideReminder} = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -67,28 +67,30 @@ export default function DevelopmentTable(props) {
     <Thead>
       <Tr>
         <Th>#</Th>
-        <Th>NIM</Th>
         <Th>Name</Th>
-        <Th>Major</Th>
-        <Th>Phone Number</Th>
-        <Th>Action</Th>
+        <Th>NIM</Th>
+        <Th>Tuition Fee</Th>
+        <Th>VA Account</Th>
+        <Th>Last Payment Date</Th>
+        <Th>Due Date</Th>
+        <Th hidden={hideReminder}>Trigger Reminder</Th>
       </Tr>
     </Thead>
     <Tbody {...getTableBodyProps()}>
     {data.map((item, index) => (
       <Tr>
       <Td>{index+1}</Td>
-      <Td>{item.nim}</Td>
       <Td>{item.name}</Td>
-      <Td>{item.major}</Td>
-      <Td>{item.no_hp}</Td>
+      <Td>{item.nim}</Td>
+      <Td>{item.tuition_fee}</Td>
+      <Td>{item.va_account}</Td>
+      <Td>{item.last_payment_date}</Td>
+      <Td>{item.due_date}</Td>
       
-      <Td>
-        <Button size="sm" mr="2px" colorScheme='teal'  onClick={()=>openModal("detail", item.nim)} ><Search2Icon/></Button>
-        <Button size="sm" mr="2px" colorScheme='blue' onClick={()=>openModal("edit", item.nim)}><EditIcon/></Button>
-        <Button size="sm" mr="2px" colorScheme='red' onClick={()=>deleteStudent(item.nim)}><DeleteIcon/></Button>
-      
+      <Td hidden={hideReminder}>
+      <Button size="sm" mr="2px" colorScheme='blue' onClick={()=>triggerReminder(item.nim)}><EmailIcon/></Button>
       </Td>
+
     </Tr>
     ))}
 

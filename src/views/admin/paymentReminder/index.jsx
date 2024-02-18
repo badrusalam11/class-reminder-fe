@@ -60,13 +60,14 @@ export default function Settings() {
   const initialRef = React.useRef()
   const finalRef = React.useRef()
   const [message, setMessage] = React.useState('');
-  const [name, setName] = React.useState('');
+  const [title, setTitle] = React.useState('');
   const [nim, setNim] = React.useState('');
   const [rclass, setClass] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [major, setMajor] = React.useState('');
   const[isLoading, setIsLoading] = React.useState(false)
   const[data, setData] = React.useState([])
+  const[jobDetail, setJobDetail] = React.useState({})
   const [listClass, setListClass] = React.useState([])
   const [selectedClasses, setSelectedClasses] = React.useState([]);
   const[classMap, setClassMap] = React.useState([])
@@ -78,6 +79,7 @@ export default function Settings() {
   React.useEffect(() => {
     loadData();
     loadlistClass();
+    loadJobDetail();
     // setSelectedClasses([
     //   1,22
     // ])
@@ -95,23 +97,64 @@ export default function Settings() {
   }, [action]);
 
   const loadData = async (e)=> {
-  const result = await callApi('api/v1/user/show');
+  const result = await callApi('api/v1/payment-reminder/show');
   setData(result.data)
   }
 
-  const loadlistClass = async (e)=> {
-  const result = await callApi('api/v1/course/list');
-  setListClass(result.data)
-  let map = new Map();
-  console.log('result.data',result.data)
-  // make it hashmap
-  for (let i = 0; i < result.data.length; i++) {
-    map.set(result.data[i].id, result.data[i].title);
+  const loadJobDetail = async (e)=> {
+  const result = await callApi('api/v1/payment-reminder/job/detail');
+  setJobDetail(result.data)
   }
-  setClassMap(map)
-  console.log("Class Map:", map);
 
+  const triggerRunJob = async(e)=>{      
+    const isConfirmed = window.confirm("Are you sure you want to force blast to all student?");
+    if (isConfirmed) {
+      const request ={
+        event_id: jobDetail.id_event
+      }
+      console.log(request)
+      const result = await callApi('notif/send','POST',request);
+      alert(result.description)
+    }
   }
+
+  const loadlistClass = async (e)=> {
+  var arr =[]
+  var elementString
+  for (let i = 1; i <= 28; i++) {
+    elementString = i.toString()
+    arr.push(elementString)    
+  }
+  console.log(arr)
+  setListClass(arr)
+  }
+
+  const handleAction = (is_job_exist)=>{
+    if (is_job_exist) {
+      setAction("edit")
+      return "edit"
+    }
+    setAction("add")
+    return "add"
+  }
+
+  const handleShowRunJob = (is_job_exist)=>{
+    if (is_job_exist) {
+      console.log("false")
+      return false
+    }
+    console.log("true")
+    return true
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setJobDetail((jobDetail) => ({
+      ...jobDetail,
+      [name]: value,
+    }));
+  };
 
   const getClassTitleById = (id)=> {
     id = parseInt(id)
@@ -135,64 +178,68 @@ export default function Settings() {
   };
 
   const submitForm = async (e) => {
+    e.preventDefault();
+    var requestData
     let endpoint
     console.log("action", action)
+    
+    // console.log(e)
+    requestData = {
+      // Your data properties here
+      title: jobDetail.title,
+      description: jobDetail.title,
+      schedule: jobDetail.schedule,
+      job_every: jobDetail.job_every,
+      id_event_type: 3,
+    };
     if (action=="edit") {
-      endpoint = "api/v1/user/edit"
+      endpoint = "api/v1/event/edit"
+      requestData.id = jobDetail.id_event
     } else{
-      endpoint = "api/v1/user/register"
+      endpoint = "api/v1/event/create"
     }
     setIsLoading(true)
-    // console.log(e)
-    const requestData = {
-      // Your data properties here
-      name: name,
-      nim: nim,
-      class: selectedClasses,
-      phone: phone,
-      major: major,
-    };
+
     console.log('requestData', requestData)
     const result = await callApi(endpoint, 'POST', requestData);
+    console.log("result submit", result)
     setIsLoading(false)
-    console.log(result)
     alert(result.description)
     onClose()
     // Reset the state variables
     clearModalData()
-     loadData()
+    loadData()
+    loadJobDetail()
   }
 
   const clearModalData = () =>{
-    setName('');
-    setNim('');
-    setClass('');
-    setPhone('');
-    setMajor('');
+    setJobDetail({})
     setSelectedClasses([])
   }
 
-  const openModal = async (action,request="") => {
+  const openModal = async (action,titleModal,request="") => {
     clearModalData()
     onOpen()
+    setTitleModal(titleModal)
+    
     switch (action) {
       case "detail":
-        setTitleModal("Detail Student")
-        loadModalData(request)
+        // loadModalData(request)
+        loadJobDetail(request)
         setIsHideSubmit(true)
         setIsFormDisabled(true)
         break;
-
-      case "edit":
-        setTitleModal("Edit Student")
-        loadModalData(request)
+        
+        case "edit":
+        // loadModalData(request)
+        loadJobDetail(request)
         setIsHideSubmit(false)
         setIsFormDisabled(false)
         setAction("edit")
         break;
         
-      default:
-        setTitleModal("Add New Student")
+        default:
+        loadJobDetail(request)
         setIsHideSubmit(false)
         setIsFormDisabled(false)
         setAction("add")
@@ -200,28 +247,35 @@ export default function Settings() {
     }
   }
 
-  const loadModalData = async (request)=> {
-    let requestData = {
-      nim: request,
-    };
-    const result = await callApi('api/v1/user/show/detail', 'POST', requestData);
-    console.log(result)
-    setName(result.data.name)
-    setNim(result.data.nim)
-    setPhone(result.data.no_hp)
-    setMajor(result.data.major)
-    setSelectedClasses(result.data.class_arr)
-    }
+  // const loadModalData = async (request)=> {
+  //   let requestData = {
+  //     nim: request,
+  //   };
+  //   const result = await callApi('api/v1/user/show/detail', 'POST', requestData);
+  //   console.log(result)
+  //   setName(result.data.name)
+  //   setNim(result.data.nim)
+  //   setPhone(result.data.no_hp)
+  //   setMajor(result.data.major)
+  //   setSelectedClasses(result.data.class_arr)
+  //   }
 
-    const deleteStudent = async (id) => {
+const isSelectedOption = (option, job_every)=>{
+  if (option == job_every) {
+    return true
+  }
+  return false
+}
+    const triggerReminder = async (nim) => {
       // Display confirmation dialog
-      const isConfirmed = window.confirm("Are you sure you want to delete?");
+      const isConfirmed = window.confirm("Are you sure you want to send notif to "+nim+"?");
       let requestData = {
-        nim: id,
+        nim: nim,
+        id_event: jobDetail.id_event
       };
       // If user clicks OK, set the state to true
       if (isConfirmed) {
-        const result = await callApi('api/v1/user/delete', 'POST', requestData);
+        const result = await callApi('api/v1/payment-reminder/job/trigger', 'POST', requestData);
         alert(result.description)
       } 
       loadData()   
@@ -234,7 +288,8 @@ export default function Settings() {
 >
 <Box>
 
-<Button onClick={()=>openModal("add")} colorScheme='teal' leftIcon={<AddIcon />} >Add New Student</Button>
+<Button onClick={()=>openModal(handleAction(jobDetail.is_job_exist),jobDetail.button_text)} colorScheme='teal'>{jobDetail.button_text}</Button>
+<Button onClick={()=>triggerRunJob(jobDetail.id_event)} hidden={handleShowRunJob(jobDetail.is_job_exist)} colorScheme='red' ml="10px">Run Job</Button>
 
       <Modal
         initialFocusRef={initialRef}
@@ -246,46 +301,64 @@ export default function Settings() {
         <ModalContent>
           <ModalHeader>{titleModal}</ModalHeader>
           <ModalCloseButton />
-          <form action="" onSubmit={submitForm}>
+          <form onSubmit={submitForm}>
           <ModalBody pb={6}>
-            <FormControl mb="5px">
-              <FormLabel>Name</FormLabel>
+          <FormControl mb="5px" hidden={true}>
+              <FormLabel>Id Event</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
               <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder='Name' 
+              // value={title}
+              // onChange={(e) => setTitle(e.target.value)}
+              value={jobDetail.id_event}
+              onChange={handleInputChange}
+              name="id_event"
+              placeholder='id_event' 
+              disabled={true}
+              />
+            </FormControl>
+            <FormControl mb="5px">
+              <FormLabel>Title</FormLabel>
+              {/* <Input ref={initialRef} placeholder='First name' /> */}
+              <Input
+              // value={title}
+              // onChange={(e) => setTitle(e.target.value)}
+              value={jobDetail.title}
+              onChange={handleInputChange}
+              name="title"
+              placeholder='Title' 
               disabled={isFormDisabled}
               />
             </FormControl>
             <FormControl mb="5px">
-              <FormLabel>NIM</FormLabel>
+              <FormLabel>Schedule</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
               <Input
-              value={nim}
-              onChange={(e) => setNim(e.target.value)}
-              placeholder='Nomor Induk Mahasiswa (NIM)' 
+              type="time"
+              value={jobDetail.schedule}
+              onChange={handleInputChange}
+              name="schedule"
+              placeholder='schedule' 
               disabled={isFormDisabled}
               />
             </FormControl>
             <FormControl mb="5px">
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel>Job Name</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
               <Input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder='Phone Number' 
-              disabled={isFormDisabled}
+              value={jobDetail.job_name}
+              onChange={handleInputChange}
+              placeholder='job name' 
+              disabled={true}
               />
             </FormControl>
             <FormControl mb="5px">
-              <FormLabel>Major</FormLabel>
+              <FormLabel>Job Id</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
               <Input
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
+              value={jobDetail.job_id}
+              onChange={handleInputChange}
               placeholder='Major'
-              disabled={isFormDisabled}
+              disabled={true}
               />
             </FormControl>
 
@@ -302,24 +375,18 @@ export default function Settings() {
             </FormControl> */}
 
           <FormControl mb="5px">
-                  <FormLabel>Classes</FormLabel>
-                  {selectedClasses.map((classId) => (
-                    <div key={classId}>
-                      <span>{getClassTitleById(classId)}</span>
-                      <Button size="sm" ml={2} onClick={() => removeClass(classId)}>
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
+                  <FormLabel>Job Every</FormLabel>
                   <Select
+                  name="job_every"
                     placeholder="Select option"
+                    onChange={handleInputChange}
                     // value={''} // Use an empty string or some default value
-                    onChange={(e) => addClass(e.target.value)}
+                    // onChange={(e) => addClass(e.target.value)}
                     
                   >
                     {listClass.map((option) => (
-                      <option key={option.id} value={option.id}>
-                        {option.title}
+                      <option key={option} value={option} selected={isSelectedOption(option, jobDetail.job_every)}>
+                        {option}
                       </option>
                     ))}
                   </Select>
@@ -351,8 +418,8 @@ export default function Settings() {
           columnsData={columnsDataDevelopment}
           tableData={data}
           openModal={openModal}
-          deleteStudent={deleteStudent}
-
+          triggerReminder={triggerReminder}
+          hideReminder={handleShowRunJob(jobDetail.is_job_exist)}
         />
       </SimpleGrid>
     </Box>
