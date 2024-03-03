@@ -16,8 +16,8 @@ export function SidebarBrand() {
   return (
     <Flex align='center' direction='column'>
       {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> */}
-      <Image src={imageLogo} h='65%' my='32px' />
-      <HSeparator mb='20px' />
+      <Image src={imageLogo} h='120px' my='32px' />
+      <HSeparator mb="5px"/>
     </Flex>
   );
 }
