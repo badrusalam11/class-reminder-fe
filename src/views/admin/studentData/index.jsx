@@ -67,6 +67,7 @@ export default function Settings() {
   const [major, setMajor] = React.useState('');
   const [tuitionFee, setTuitionFee] = React.useState(0);
   const [vaAccount, setVaAccount] = React.useState('');
+  const [paymentDate, setPaymentDate] = React.useState('');
 
 
   const[isLoading, setIsLoading] = React.useState(false)
@@ -157,6 +158,7 @@ export default function Settings() {
       major: major,
       tuition_fee: parseInt(tuitionFee),
       va_account: vaAccount,
+      last_payment_date: paymentDate,
     };
     console.log('requestData', requestData)
     const result = await callApi(endpoint, 'POST', requestData);
@@ -221,6 +223,7 @@ export default function Settings() {
     setTuitionFee(result.data.tuition_fee)
     setVaAccount(result.data.va_account)
     setSelectedClasses(result.data.class_arr)
+    setPaymentDate(result.data.last_payment_date)
     }
 
     const deleteStudent = async (id) => {
@@ -354,6 +357,18 @@ export default function Settings() {
                       </option>
                     ))}
                   </Select>
+            </FormControl>
+
+            <FormControl mb="5px">
+              <FormLabel>Tuition Last Payment Date</FormLabel>
+              {/* <Input ref={initialRef} placeholder='First name' /> */}
+              <Input
+              type="date"
+              value={paymentDate}
+              onChange={(e) => setPaymentDate(e.target.value)}
+              placeholder='Tuition Last Payment Date'
+              disabled={isFormDisabled}
+              />
             </FormControl>
 
           </ModalBody>
