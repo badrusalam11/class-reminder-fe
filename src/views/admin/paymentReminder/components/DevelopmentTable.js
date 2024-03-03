@@ -82,7 +82,7 @@ export default function DevelopmentTable(props) {
       <Td>{index+1}</Td>
       <Td>{item.name}</Td>
       <Td>{item.nim}</Td>
-      <Td>{item.tuition_fee}</Td>
+      <Td>{item.tuition_fee_str}</Td>
       <Td>{item.va_account}</Td>
       <Td>{item.last_payment_date}</Td>
       <Td>{item.due_date}</Td>

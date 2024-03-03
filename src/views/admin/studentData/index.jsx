@@ -66,6 +66,7 @@ export default function Settings() {
   const [phone, setPhone] = React.useState('');
   const [major, setMajor] = React.useState('');
   const [tuitionFee, setTuitionFee] = React.useState(0);
+
   const [vaAccount, setVaAccount] = React.useState('');
   const [paymentDate, setPaymentDate] = React.useState('');
 
@@ -240,6 +241,21 @@ export default function Settings() {
       loadData()   
       };
 
+      const formatTuitionFee = (value) => {
+        value = value.toString()
+        // Use regex to add dots as thousand separators
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      };
+    
+      const handleTuitionFeeChange = (val) => {
+        // Remove dots before updating the state
+        // const newValue = val.replace(/\./g, '');
+        const newValue = val.replace(/[^0-9]/g, '');
+        setTuitionFee(newValue);
+      };
+    
+
+
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -305,9 +321,9 @@ export default function Settings() {
               <FormLabel>Tuition Fee</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
               <Input
-              type="number"
-              value={tuitionFee}
-              onChange={(e) => setTuitionFee(e.target.value)}
+              //type="number"
+              value={formatTuitionFee(tuitionFee)}
+              onChange={(e) => handleTuitionFeeChange(e.target.value)}
               placeholder='Tuition Fee'
               disabled={isFormDisabled}
               />
