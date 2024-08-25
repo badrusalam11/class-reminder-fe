@@ -29,16 +29,18 @@ jobs:
         run: npm run build:prod
 
       - name: Add SSH Host Key
+        env:
+          SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
       - name: Save Secret to File
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: | 
           echo $PRIVATE_KEY > private-key.pem
           chmod 600 private-key.pem
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
       - name: Deploy to server
         env:
