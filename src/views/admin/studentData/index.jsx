@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
@@ -143,7 +144,7 @@ export default function Settings() {
   const submitForm = async (e) => {
     let endpoint
     console.log("action", action)
-    if (action=="edit") {
+    if (action==="edit") {
       endpoint = "api/v1/user/edit"
     } else{
       endpoint = "api/v1/user/register"

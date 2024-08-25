@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
@@ -36,23 +37,15 @@ Modal,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Select,
 } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/courseReminder/components/DevelopmentTable";
 import {
   columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
 } from "views/admin/courseReminder/variables/columnsData";
-import tableDataDevelopment from "views/admin/courseReminder/variables/tableDataDevelopment.json";
 
 import React from "react";
 import { callApi } from '../../../api';
-import { MdOutlineFaceRetouchingNatural } from "react-icons/md";
-import { AddIcon } from "@chakra-ui/icons";
-
 
 export default function Settings() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -137,7 +130,7 @@ export default function Settings() {
   const submitForm = async (e) => {
     let endpoint
     console.log("action", action)
-    if (action=="edit") {
+    if (action==="edit") {
       endpoint = "api/v1/user/edit"
     } else{
       endpoint = "api/v1/user/register"
@@ -288,18 +281,6 @@ export default function Settings() {
               disabled={isFormDisabled}
               />
             </FormControl>
-
-
-            {/* <FormControl mb="5px">
-              <FormLabel>Class</FormLabel>
-              <Select placeholder='Select option' value={rclass} onChange={(e)=> setClass(e.target.value)} required>
-                {listClass.map((option) => (
-                <option key={option.id} value={option.id}>
-                {option.title}
-              </option>
-              ))}
-              </Select>
-            </FormControl> */}
 
           <FormControl mb="5px">
                   <FormLabel>Classes</FormLabel>

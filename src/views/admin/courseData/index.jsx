@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
@@ -36,21 +37,15 @@ Modal,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Select,
 } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/courseData/components/DevelopmentTable";
 import {
   columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
 } from "views/admin/courseData/variables/columnsData";
-import tableDataDevelopment from "views/admin/courseData/variables/tableDataDevelopment.json";
 
 import React from "react";
 import { callApi } from '../../../api';
-import { MdOutlineFaceRetouchingNatural } from "react-icons/md";
 import { AddIcon } from "@chakra-ui/icons";
 
 
@@ -138,31 +133,10 @@ export default function Settings() {
  
   }
 
-  const getClassTitleById = (id)=> {
-    id = parseInt(id)
-    console.log('id input', id)
-    console.log('classMap', classMap)
-    console.log('classMap id', classMap.get(id))
-    return  classMap.get(id)
-  }
-  const addClass = (classId) => {
-    console.log('classId in add class', classId)
-    classId = parseInt(classId)
-    // Ensure the classId is not already in the selectedClasses array
-    if (!selectedClasses.includes(classId)) {
-      setSelectedClasses([...selectedClasses, classId]);
-    }
-  };
-
-  const removeClass = (classId) => {
-    const updatedClasses = selectedClasses.filter((id) => id !== classId);
-    setSelectedClasses(updatedClasses);
-  };
-
   const submitForm = async (e) => {
     let endpoint
     console.log("action", action)
-    if (action=="edit") {
+    if (action==="edit") {
       endpoint = "api/v1/course/edit"
     } else{
       endpoint = "api/v1/course/create"
@@ -176,7 +150,7 @@ export default function Settings() {
       schedule: time,
       day: courseDay,
     };
-    if (action=="edit") {
+    if (action==="edit") {
       requestData.id=id
     }
     console.log('requestData', requestData)
@@ -201,7 +175,7 @@ export default function Settings() {
     setSelectedClasses([])
   }
   const isSelectedCourse = (courseDay, val) =>{
-    if (courseDay == val) {
+    if (courseDay === val) {
       console.log(courseDay)
       return true
     }

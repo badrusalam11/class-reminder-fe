@@ -35,22 +35,14 @@ Modal,
   Button,
   FormControl,
   FormLabel,
-  Input,
   Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import DevelopmentTable from "views/admin/blastEvent/components/DevelopmentTable";
-import CheckTable from "views/admin/blastEvent/components/CheckTable";
-import ColumnsTable from "views/admin/blastEvent/components/ColumnsTable";
-import ComplexTable from "views/admin/blastEvent/components/ComplexTable";
 import {
   columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
 } from "views/admin/blastEvent/variables/columnsData";
-import tableDataDevelopment from "views/admin/blastEvent/variables/tableDataDevelopment.json";
 
 import React from "react";
 import { callApi } from '../../../api';

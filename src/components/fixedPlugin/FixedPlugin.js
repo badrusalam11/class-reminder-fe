@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 // Chakra Imports
-import { Button, Icon, useColorMode } from "@chakra-ui/react";
+import { useColorMode } from "@chakra-ui/react";
 // Custom Icons
-import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import React from "react";
 
 export default function FixedPlugin(props) {

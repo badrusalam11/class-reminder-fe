@@ -2,7 +2,6 @@ import React from "react";
 
 import { Icon } from "@chakra-ui/react";
 import {
-  MdBarChart,
   MdMenuBook,
   MdAttachMoney,
   MdHome,
@@ -15,14 +14,9 @@ import {
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
-import NFTMarketplace from "views/admin/marketplace";
-import Profile from "views/admin/profile";
-import DataTables from "views/admin/dataTables";
-import DataManagement from "views/admin/dataManagement";
 import BlastEvent from "views/admin/blastEvent";
 import StudentData from "views/admin/studentData";
 import CourseData from "views/admin/courseData";
-import RTL from "views/admin/rtl";
 import NotFound from "views/general/notfound";
 import PaymentReminder from "views/admin/paymentReminder";
 import CourseReminder from "views/admin/courseReminder";

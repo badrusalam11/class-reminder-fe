@@ -1,6 +1,6 @@
 // SwipableBox.js
 import React, { useState } from 'react';
-import { Box, Flex, Text, Button, Center,  Icon, } from '@chakra-ui/react';
+import { Flex, Text, Button, Center,  Icon, } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";

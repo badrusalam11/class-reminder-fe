@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Chakra imports
 import { Portal, Box, useDisclosure, Text, Button, Link } from '@chakra-ui/react';
 import Footer from 'components/footer/FooterAdmin.js';

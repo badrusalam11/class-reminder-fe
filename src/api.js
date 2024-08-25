@@ -14,7 +14,7 @@ const handleResponse = async (response) => {
 
 export const callApi = async (endpoint, method = 'GET', data = null) => {
     console.log(token)
-    if(token==""){
+    if(token===""){
         window.location.replace(`${process.env.REACT_BASE_URL}`)
     }
   const url = `${BASE_URL}${endpoint}`;
@@ -34,10 +34,10 @@ export const callApi = async (endpoint, method = 'GET', data = null) => {
     let finalResponse = await handleResponse(response)
     console.log('resp', response.response)
     console.log('final', finalResponse)
-    if (finalResponse.code=="05") {
+    if (finalResponse.code==="05") {
         console.log("session expired")
         localStorage.clear()
-        window.location.replace(`${process.env.REACT_BASE_URL}`+"?sessionExpired=true")
+        window.location.replace(`${process.env.REACT_BASE_URL}?sessionExpired=true`)
     }
     return finalResponse;
   } catch (error) {

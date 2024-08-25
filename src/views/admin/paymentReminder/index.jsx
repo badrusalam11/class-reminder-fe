@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
@@ -192,7 +193,7 @@ export default function Settings() {
       job_every: jobDetail.job_every,
       id_event_type: 3,
     };
-    if (action=="edit") {
+    if (action==="edit") {
       endpoint = "api/v1/event/edit"
       requestData.id = jobDetail.id_event
     } else{
@@ -261,7 +262,7 @@ export default function Settings() {
   //   }
 
 const isSelectedOption = (option, job_every)=>{
-  if (option == job_every) {
+  if (option === job_every) {
     return true
   }
   return false
