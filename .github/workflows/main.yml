@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: Production  # Specify the environment here
+    environment: Production
 
     steps:
       - name: Checkout code
@@ -30,30 +30,30 @@ jobs:
 
       - name: Add SSH Host Key
         env:
-          SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
+          SERVER_IP: ${{ vars.SERVER_IP }}
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
-      - name: Save Secret to File
+      - name: Decode and Save Private Key
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: | 
-          echo $PRIVATE_KEY > private-key.pem
-          chmod 600 private-key.pem
-
-      - name: Test connection to server
-        env:
-          SERVER_USER: ${{ vars.SERVER_USER }}  # Referencing the environment variable
-          SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
-        run: | 
-          ssh -i private-key.pem $SERVER_USER@$SERVER_IP
-
-      - name: Deploy to server
-        env:
-          BUILD_DIR: ${{ vars.BUILD_DIR }}  # Referencing the environment variable
-          SERVER_USER: ${{ vars.SERVER_USER }}  # Referencing the environment variable
-          SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
-          SERVER_DIR: ${{ vars.SERVER_DIR }}  # Referencing the environment variable
         run: |
-          rsync -avz -e "ssh -i private-key.pem" --delete -vv $BUILD_DIR/ $SERVER_USER@$SERVER_IP:$SERVER_DIR
+          echo "${{ secrets.PRIVATE_KEY }}" | base64 -d > ~/.ssh/private-key.pem
+          chmod 600 ~/.ssh/private-key.pem
+
+      - name: Test SSH Connection
+        env:
+          SERVER_USER: ${{ vars.SERVER_USER }}
+          SERVER_IP: ${{ vars.SERVER_IP }}
+        run: |
+          ssh -i ~/.ssh/private-key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP exit
+
+      - name: Deploy to Server
+        env:
+          BUILD_DIR: ${{ vars.BUILD_DIR }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+          SERVER_IP: ${{ vars.SERVER_IP }}
+          SERVER_DIR: ${{ vars.SERVER_DIR }}
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/private-key.pem -o StrictHostKeyChecking=no" --delete -vv $BUILD_DIR/ $SERVER_USER@$SERVER_IP:$SERVER_DIR
