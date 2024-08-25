@@ -28,16 +28,17 @@ jobs:
       - name: Build
         run: npm run build:prod
 
+      - name: Save Secret to File
+        run: | 
+          echo $PRIVATE_KEY > private-key.pem
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          
       - name: Deploy to server
         env:
-          PRIVATE_KEY: ${{ vars.PRIVATE_KEY }}  # Referencing the secret
           BUILD_DIR: ${{ vars.BUILD_DIR }}  # Referencing the environment variable
           SERVER_USER: ${{ vars.SERVER_USER }}  # Referencing the environment variable
           SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
           SERVER_DIR: ${{ vars.SERVER_DIR }}  # Referencing the environment variable
         run: |
-          # Save the private key to a file
-          echo "$PRIVATE_KEY" | sed 's/\\n/\n/g' > private-key.pem
-          # Set the correct permissions
-          chmod 600 private-key.pem
           rsync -avz -e "ssh -i private-key.pem" --delete $BUILD_DIR/ $SERVER_USER@$SERVER_IP:$SERVER_DIR
