@@ -33,7 +33,7 @@ jobs:
           echo $PRIVATE_KEY > private-key.pem
           chmod 6000 private-key.pem
         env:
-          PRIVATE_KEY: ${{ vars.PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
       - name: Deploy to server
         env:
