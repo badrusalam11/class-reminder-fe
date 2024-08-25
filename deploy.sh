@@ -7,7 +7,7 @@ set -e
 BUILD_DIR="build"
 SERVER_DIR="/var/www/html/perbanas-institute"
 SERVER_USER="vpsservice"
-SERVER_IP="your_server_ip"
+SERVER_IP="http://103.175.217.175/"
 
 # Print a message to indicate the start of deployment
 echo "Starting deployment..."
