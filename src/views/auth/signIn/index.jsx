@@ -205,7 +205,7 @@ const isHideError = (error)=> {
               fontSize='sm'
               ms={{ base: "0px", md: "0px" }}
               type='text'
-              placeholder='username'
+              placeholder='Enter your username'
               mb='24px'
               fontWeight='500'
               size='lg'
@@ -224,7 +224,7 @@ const isHideError = (error)=> {
               <Input
                 isRequired={true}
                 fontSize='sm'
-                placeholder='password'
+                placeholder='Enter your password'
                 mb='24px'
                 size='lg'
                 type={show ? "text" : "password"}
