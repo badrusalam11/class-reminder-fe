@@ -42,6 +42,13 @@ jobs:
           echo $PRIVATE_KEY > private-key.pem
           chmod 600 private-key.pem
 
+      - name: Test connection to server
+        env:
+          SERVER_USER: ${{ vars.SERVER_USER }}  # Referencing the environment variable
+          SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
+        run: | 
+          ssh -i private-key.pem $SERVER_USER@SERVER_IP
+
       - name: Deploy to server
         env:
           BUILD_DIR: ${{ vars.BUILD_DIR }}  # Referencing the environment variable
