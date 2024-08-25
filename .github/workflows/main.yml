@@ -30,7 +30,7 @@ jobs:
 
       - name: Deploy to server
         env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}  # Referencing the secret
+          PRIVATE_KEY: ${{ vars.PRIVATE_KEY }}  # Referencing the secret
           BUILD_DIR: ${{ vars.BUILD_DIR }}  # Referencing the environment variable
           SERVER_USER: ${{ vars.SERVER_USER }}  # Referencing the environment variable
           SERVER_IP: ${{ vars.SERVER_IP }}  # Referencing the environment variable
