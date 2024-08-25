@@ -33,7 +33,10 @@ jobs:
           echo $PRIVATE_KEY > private-key.pem
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          
+
+      - name: Check the secret
+        run: cat private-key.pem
+
       - name: Deploy to server
         env:
           BUILD_DIR: ${{ vars.BUILD_DIR }}  # Referencing the environment variable
