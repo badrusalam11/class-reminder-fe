@@ -31,7 +31,7 @@ jobs:
       - name: Save Secret to File
         run: | 
           echo $PRIVATE_KEY > private-key.pem
-          chmod 6000 private-key.pem
+          chmod 600 private-key.pem
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
