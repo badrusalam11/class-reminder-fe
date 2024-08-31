@@ -12,6 +12,9 @@ import {
   MdBook,
 } from "react-icons/md";
 
+import { FaGraduationCap } from "react-icons/fa";
+
+
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import BlastEvent from "views/admin/blastEvent";
@@ -20,6 +23,7 @@ import CourseData from "views/admin/courseData";
 import NotFound from "views/general/notfound";
 import PaymentReminder from "views/admin/paymentReminder";
 import CourseReminder from "views/admin/courseReminder";
+import GraduationReminder from "views/admin/graduationReminder";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -106,6 +110,13 @@ const routes = [
         path: "/payment",
         icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
         component: PaymentReminder,
+      },
+      {
+        name: "Graduation Reminder",
+        layout: "/admin",
+        path: "/graduation",
+        icon: <Icon as={FaGraduationCap} width='20px' height='20px' color='inherit' />,
+        component: GraduationReminder,
       },
 
     ]
