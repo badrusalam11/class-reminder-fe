@@ -27,7 +27,7 @@ import {
 } from "react-table";
 
 export default function DevelopmentTable(props) {
-  const { columnsData, tableData } = props;
+  const { columnsData, tableData, triggerReminder } = props;
 
   const [filterValue, setFilterValue] = useState("all");
 
@@ -89,7 +89,7 @@ export default function DevelopmentTable(props) {
               <Td>{item.nim}</Td>
               <Td>{item.major}</Td>
               <Td>{item.is_registered_string}</Td>
-              <Td hidden={item.is_registered?false:true}>
+              <Td hidden={item.is_registered}>
                 <Button size="sm" mr="2px" colorScheme='blue' onClick={()=>triggerReminder(item.nim)}><EmailIcon/></Button>
               </Td>
             </Tr>
