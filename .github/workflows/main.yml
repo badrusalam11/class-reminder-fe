@@ -28,13 +28,6 @@ jobs:
       - name: Build
         run: npm run build:prod
 
-      - name: Add SSH Host Key
-        env:
-          SERVER_IP: ${{ vars.SERVER_IP }}
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-
       - name: Decode and Save Private Key
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
