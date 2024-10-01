@@ -2,14 +2,12 @@ import React from "react";
 
 import { Icon } from "@chakra-ui/react";
 import {
-  MdMenuBook,
   MdAttachMoney,
   MdHome,
   MdLock,
   MdCampaign,
   MdHelp,
   MdPerson,
-  MdBook,
 } from "react-icons/md";
 
 import { FaGraduationCap } from "react-icons/fa";
@@ -19,10 +17,8 @@ import { FaGraduationCap } from "react-icons/fa";
 import MainDashboard from "views/admin/default";
 import BlastEvent from "views/admin/blastEvent";
 import StudentData from "views/admin/studentData";
-import CourseData from "views/admin/courseData";
 import NotFound from "views/general/notfound";
 import PaymentReminder from "views/admin/paymentReminder";
-import CourseReminder from "views/admin/courseReminder";
 import GraduationReminder from "views/admin/graduationReminder";
 
 // Auth Imports
