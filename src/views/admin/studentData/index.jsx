@@ -67,6 +67,8 @@ export default function Settings() {
   const [phone, setPhone] = React.useState('');
   const [major, setMajor] = React.useState('');
   const [tuitionFee, setTuitionFee] = React.useState(0);
+  const [graduation, setGraduation] = React.useState(0);
+  const [gudiance, setGuidance] = React.useState(0);
 
   const [vaAccount, setVaAccount] = React.useState('');
   const [paymentDate, setPaymentDate] = React.useState('');
@@ -161,6 +163,8 @@ export default function Settings() {
       tuition_fee: parseInt(tuitionFee),
       va_account: vaAccount,
       last_payment_date: paymentDate,
+      is_regis_graduation: parseInt(graduation),
+      is_done_thesis: parseInt(gudiance),
     };
     console.log('requestData', requestData)
     const result = await callApi(endpoint, 'POST', requestData);
@@ -182,6 +186,8 @@ export default function Settings() {
     setTuitionFee('');
     setVaAccount('');
     setSelectedClasses([])
+    setGraduation('');
+    setGuidance('');
   }
 
   const openModal = async (action,request="") => {
@@ -226,6 +232,8 @@ export default function Settings() {
     setVaAccount(result.data.va_account)
     setSelectedClasses(result.data.class_arr)
     setPaymentDate(result.data.last_payment_date)
+    setGraduation(result.data.is_regis_graduation)
+    setGuidance(result.data.is_done_thesis)
     }
 
     const deleteStudent = async (id) => {
@@ -286,6 +294,7 @@ export default function Settings() {
               onChange={(e) => setName(e.target.value)}
               placeholder='Name' 
               disabled={isFormDisabled}
+              required={true}
               />
             </FormControl>
             <FormControl mb="5px">
@@ -296,6 +305,7 @@ export default function Settings() {
               onChange={(e) => setNim(e.target.value)}
               placeholder='Nomor Induk Mahasiswa (NIM)' 
               disabled={isFormDisabled}
+              required={true}
               />
             </FormControl>
             <FormControl mb="5px">
@@ -306,6 +316,7 @@ export default function Settings() {
               onChange={(e) => setPhone(e.target.value)}
               placeholder='Phone Number' 
               disabled={isFormDisabled}
+              required={true}
               />
             </FormControl>
             <FormControl mb="5px">
@@ -316,6 +327,7 @@ export default function Settings() {
               onChange={(e) => setMajor(e.target.value)}
               placeholder='Major'
               disabled={isFormDisabled}
+              required={true}
               />
             </FormControl>
             <FormControl mb="5px">
@@ -327,6 +339,7 @@ export default function Settings() {
               onChange={(e) => handleTuitionFeeChange(e.target.value)}
               placeholder='Tuition Fee'
               disabled={isFormDisabled}
+              required={true}
               />
             </FormControl>
             <FormControl mb="5px">
@@ -336,7 +349,7 @@ export default function Settings() {
               value={vaAccount}
               onChange={(e) => setVaAccount(e.target.value)}
               placeholder='VA Account'
-              disabled={isFormDisabled}
+              disabled={true}
               />
             </FormControl>
 
@@ -352,30 +365,6 @@ export default function Settings() {
               </Select>
             </FormControl> */}
 
-          <FormControl mb="5px">
-                  <FormLabel>Classes</FormLabel>
-                  {selectedClasses.map((classId) => (
-                    <div key={classId}>
-                      <span>{getClassTitleById(classId)}</span>
-                      <Button size="sm" ml={2} onClick={() => removeClass(classId)}>
-                        Remove
-                      </Button>
-                    </div>
-                  ))}
-                  <Select
-                    placeholder="Select option"
-                    // value={''} // Use an empty string or some default value
-                    onChange={(e) => addClass(e.target.value)}
-                    
-                  >
-                    {listClass.map((option) => (
-                      <option key={option.id} value={option.id}>
-                        {option.title}
-                      </option>
-                    ))}
-                  </Select>
-            </FormControl>
-
             <FormControl mb="5px">
               <FormLabel>Tuition Last Payment Date</FormLabel>
               {/* <Input ref={initialRef} placeholder='First name' /> */}
@@ -385,7 +374,24 @@ export default function Settings() {
               onChange={(e) => setPaymentDate(e.target.value)}
               placeholder='Tuition Last Payment Date'
               disabled={isFormDisabled}
+              required={true}
               />
+            </FormControl>
+
+            <FormControl mb="5px">
+              <FormLabel>Have Registered for Graduation?</FormLabel>
+              <Select  value={graduation} onChange={(e)=> setGraduation(e.target.value)} required>
+                <option key="0"value={0}>No</option>
+                <option key="1"value={1}>Yes</option>
+              </Select>
+            </FormControl>
+
+            <FormControl mb="5px">
+              <FormLabel>Have Done Thesis Guidance?</FormLabel>
+              <Select value={gudiance} onChange={(e)=> setGuidance(e.target.value)} required>
+                <option key="0"value={0}>No</option>
+                <option key="1"value={1}>Yes</option>
+              </Select>
             </FormControl>
 
           </ModalBody>

@@ -61,20 +61,20 @@ const routes = [
         ),
         component: StudentData,
       },
-      {
-        name: "Course Data",
-        layout: "/admin",
-        path: "/data-course",
-        icon: (
-          <Icon
-            as={MdBook}
-            width='20px'
-            height='20px'
-            color='inherit'
-          />
-        ),
-        component: CourseData,
-      },
+        // {
+        //   name: "Course Data",
+        //   layout: "/admin",
+        //   path: "/data-course",
+        //   icon: (
+        //     <Icon
+        //       as={MdBook}
+        //       width='20px'
+        //       height='20px'
+        //       color='inherit'
+        //     />
+        //   ),
+        //   component: CourseData,
+        // },
     ]
   },
   {
@@ -97,13 +97,13 @@ const routes = [
         secondary: true,
       },
       
-      {
-        name: "Course Reminder Log",
-        layout: "/admin",
-        path: "/course",
-        icon: <Icon as={MdMenuBook} width='20px' height='20px' color='inherit' />,
-        component: CourseReminder,
-      },
+      // {
+      //   name: "Course Reminder Log",
+      //   layout: "/admin",
+      //   path: "/course",
+      //   icon: <Icon as={MdMenuBook} width='20px' height='20px' color='inherit' />,
+      //   component: CourseReminder,
+      // },
       {
         name: "Payment Reminder",
         layout: "/admin",
