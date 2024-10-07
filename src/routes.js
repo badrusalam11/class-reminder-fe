@@ -20,6 +20,7 @@ import StudentData from "views/admin/studentData";
 import NotFound from "views/general/notfound";
 import PaymentReminder from "views/admin/paymentReminder";
 import GraduationReminder from "views/admin/graduationReminder";
+import ThesisReminder from "views/admin/thesisReminder";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -113,6 +114,13 @@ const routes = [
         path: "/graduation",
         icon: <Icon as={FaGraduationCap} width='20px' height='20px' color='inherit' />,
         component: GraduationReminder,
+      },
+      {
+        name: "Sarjana Thesis Reminder",
+        layout: "/admin",
+        path: "/thesis",
+        icon: <Icon as={FaGraduationCap} width='20px' height='20px' color='inherit' />,
+        component: ThesisReminder,
       },
 
     ]
