@@ -15,7 +15,7 @@ import {
   Center,
   Button,
 } from "@chakra-ui/react";
-import { Search2Icon, DeleteIcon, EditIcon , EmailIcon} from '@chakra-ui/icons'
+import { Search2Icon, DeleteIcon, EditIcon, EmailIcon } from '@chakra-ui/icons'
 
 // Custom components
 import React, { useMemo, useState } from "react";
@@ -33,10 +33,11 @@ export default function DevelopmentTable(props) {
 
   const columns = useMemo(() => columnsData, [columnsData]);
 
+  // Adjusting filter logic to match "Is_eligable_grad" from backend data
   const filteredData = useMemo(() => {
     if (filterValue === "all") return tableData;
-    if (filterValue === "registered") return tableData.filter(item => item.is_registered);
-    if (filterValue === "unregistered") return tableData.filter(item => !item.is_registered);
+    if (filterValue === "Yes") return tableData.filter(item => item.Is_eligable_grad === "Yes"); // Eligible
+    if (filterValue === "No") return tableData.filter(item => item.Is_eligable_grad === "No");  // Uneligible
   }, [tableData, filterValue]);
 
   const tableInstance = useTable(
@@ -56,7 +57,7 @@ export default function DevelopmentTable(props) {
   return (
     <TableContainer bg='white'>
       <Flex mb={4} justifyContent="flex-end">
-        <Center >
+        <Center>
           <FormLabel>Filter By: </FormLabel>
           <Select
             width="200px"
@@ -64,8 +65,8 @@ export default function DevelopmentTable(props) {
             value={filterValue}
           >
             <option value="all">Show All</option>
-            <option value="registered">Show Registered</option>
-            <option value="unregistered">Show Unregistered</option>
+            <option value="Yes">Eligible</option>
+            <option value="No">Uneligible</option>
           </Select>
         </Center>
       </Flex>
@@ -78,7 +79,7 @@ export default function DevelopmentTable(props) {
             <Th>NIM</Th>
             <Th>Major</Th>
             <Th>Logbook</Th>
-            <Th>Registered Sidang</Th>
+            <Th>Eligable for Sidang</Th>
             <Th>Trigger Reminder</Th>
           </Tr>
         </Thead>
@@ -90,9 +91,9 @@ export default function DevelopmentTable(props) {
               <Td>{item.nim}</Td>
               <Td>{item.major}</Td>
               <Td>{item.logbook}</Td>
-              <Td>{item.is_regis_graduation_string}</Td>
+              <Td>{item.Is_eligable_grad}</Td> {/* Display the eligibility status */}
               <Td hidden={!item.is_reminder}>
-                <Button size="sm" mr="2px" colorScheme='blue' onClick={()=>triggerReminder(item.nim)}><EmailIcon/></Button>
+                <Button size="sm" mr="2px" colorScheme='blue' onClick={() => triggerReminder(item.nim)}><EmailIcon /></Button>
               </Td>
             </Tr>
           ))}
