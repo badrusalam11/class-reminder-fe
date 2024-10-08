@@ -91,7 +91,8 @@ React.useEffect(() => {
 const checkSession = () =>{
    // Access the URL parameters
    const searchParams = new URLSearchParams(location.search);
-   const sessionExpired = searchParams.get("sessionExpired");
+  //  const sessionExpired = searchParams.get("sessionExpired");
+  const sessionExpired = localStorage.getItem("show_error")
 
    if (sessionExpired === "true") {
      // Handle session expiration as needed
