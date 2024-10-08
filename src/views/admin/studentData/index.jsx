@@ -68,7 +68,7 @@ export default function Settings() {
   const [major, setMajor] = React.useState('');
   const [tuitionFee, setTuitionFee] = React.useState(0);
   const [graduation, setGraduation] = React.useState(0);
-  const [gudiance, setGuidance] = React.useState(0);
+  const [logbook, setLogbook] = React.useState(0);
 
   const [vaAccount, setVaAccount] = React.useState('');
   const [paymentDate, setPaymentDate] = React.useState('');
@@ -164,7 +164,7 @@ export default function Settings() {
       va_account: vaAccount,
       last_payment_date: paymentDate,
       is_regis_graduation: parseInt(graduation),
-      is_done_thesis: parseInt(gudiance),
+      logbook: parseInt(logbook),
     };
     console.log('requestData', requestData)
     const result = await callApi(endpoint, 'POST', requestData);
@@ -187,7 +187,7 @@ export default function Settings() {
     setVaAccount('');
     setSelectedClasses([])
     setGraduation('');
-    setGuidance('');
+    setLogbook('');
   }
 
   const openModal = async (action,request="") => {
@@ -233,7 +233,7 @@ export default function Settings() {
     setSelectedClasses(result.data.class_arr)
     setPaymentDate(result.data.last_payment_date)
     setGraduation(result.data.is_regis_graduation)
-    setGuidance(result.data.is_done_thesis)
+    setLogbook(result.data.logbook)
     }
 
     const deleteStudent = async (id) => {
@@ -387,10 +387,17 @@ export default function Settings() {
             </FormControl>
 
             <FormControl mb="5px">
-              <FormLabel>Have Done Thesis Guidance?</FormLabel>
-              <Select value={gudiance} onChange={(e)=> setGuidance(e.target.value)} required>
-                <option key="0"value={0}>No</option>
-                <option key="1"value={1}>Yes</option>
+              <FormLabel>Logbook</FormLabel>
+              <Select value={logbook} onChange={(e)=> setLogbook(e.target.value)} required>
+                <option key="0"value={0}>0</option>
+                <option key="1"value={1}>1</option>
+                <option key="1"value={2}>2</option>
+                <option key="1"value={3}>3</option>
+                <option key="1"value={4}>4</option>
+                <option key="1"value={5}>5</option>
+                <option key="1"value={6}>6</option>
+                <option key="1"value={7}>7</option>
+                <option key="1"value={8}>8</option>
               </Select>
             </FormControl>
 
