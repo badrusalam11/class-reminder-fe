@@ -11,4 +11,4 @@
 `npm run build:prod`
 
 # Deployment
-- Copy the file in folder build to your webserver directory (usually in /var/www/html/)
+- setup secret and variables in CI/CD github actions (deployment will automatically done with CI/CD)
